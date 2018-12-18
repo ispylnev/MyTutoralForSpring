@@ -1,4 +1,4 @@
-import Object.FileManager;
+import Objects.FileManager;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -7,6 +7,6 @@ public class Start {
         ApplicationContext context = new ClassPathXmlApplicationContext("context.xml");
         FileManager fileUtil = (FileManager) context.getBean("fileManager");
         fileUtil.getExtensionCount("c:\\Windows\\System32");
-//        fileUtil.getExtensionCount("c:\\Windows\\");
+//        fileUtil.getExtensionList("c:\\Windows\\");
     }
 }

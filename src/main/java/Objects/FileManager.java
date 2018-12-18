@@ -1,4 +1,4 @@
-package Object;
+package Objects;
 
 import annotation.ShowResult;
 import annotation.ShowTime;
@@ -8,10 +8,11 @@ import java.io.File;
 import java.io.FilenameFilter;
 import java.util.*;
 @Component
-public class FileManager {
+public class FileManager implements Manager {
     @ShowResult
     @ShowTime
-    public Set<String> getExecList(String folder){
+    @Override
+    public Set<String> getExtensionList(String folder){
         File dir = new File (folder);
         Set<String> execList = new TreeSet<>();
         for (String fileName : dir.list()){
@@ -25,10 +26,12 @@ public class FileManager {
     }
     @ShowResult
     @ShowTime
+    @Override
+//    Колличество которое содержется в TreSet
     public Map<String,Integer> getExtensionCount(String folder){
         File dir = new File(folder);
         Map<String, Integer> map = new HashMap<>();
-        for(String ext : getExecList(folder)){
+        for(String ext : getExtensionList(folder)){
             FilenameFilter filenameFilter = new CustomFilter(ext);
             map.put(ext, dir.listFiles(filenameFilter).length);
         }
