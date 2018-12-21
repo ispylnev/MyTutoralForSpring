@@ -1,4 +1,4 @@
-package postProcessor;
+package aop;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 public class MyBeanPostProc implements BeanPostProcessor {
     @Override
     public Object postProcessBeforeInitialization(Object o, String s) throws BeansException {
-        System.err.println(o + "mybeanpostpros()");
+        System.err.println(o + "MyBeanPostProcInit()");
         return o;
     }
 

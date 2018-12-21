@@ -39,9 +39,10 @@ public class MyLogger {
 
         return output;
     }
-    @AfterReturning(pointcut = "allMethod()&&@annotation(annotation.ShowResult)&&execution(java.util.Map *(..))",
+    @AfterReturning(pointcut = "allMethod()&&@annotation(annotation.ShowResult)" +
+            "&&execution(java.util.Map *(..))&&args(folder)",
             returning = "object")
-    public void printMap(Object object){
+    public void printMap(Object object,String folder){
         System.out.println("<<Print Map>>");
         Map map = (Map) object;
         for(Object obj : map.keySet()){
@@ -49,9 +50,10 @@ public class MyLogger {
             }
         System.out.println("end print Map");
         }
-    @AfterReturning(pointcut = "allMethod()&&@annotation(annotation.ShowResult)&&execution(java.util.Set *(..))",
+    @AfterReturning(pointcut = "allMethod()&&@annotation(annotation.ShowResult)&&" +
+            "execution(java.util.Set *(..))&&args(folder)",
             returning = "object")
-     public void printSet(Object object){
+     public void printSet(Object object,String folder){
          System.out.println("<<Pring Set>>");
          Set set = (Set) object;
          for (Object obj: set ){
