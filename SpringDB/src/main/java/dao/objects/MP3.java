@@ -2,7 +2,7 @@ package dao.objects;
 
 public class MP3 {
     private String name;
-    private String author;
+    private Author author;
     private int id;
 
     public Integer getId() {
@@ -17,16 +17,27 @@ public class MP3 {
         return name;
     }
 
+
+
     public void setName(String name) {
         this.name = name;
     }
 
-    public String getAuthor() {
+    public Author getAuthor() {
         return author;
     }
 
 
-    public void setAuthor(String author) {
+    public void setAuthor(Author author ) {
         this.author = author;
+    }
+
+    @Override
+    public String toString() {
+        return "MP3{" +
+                "name='" + name + '\'' +
+                ", author=" + author +
+                ", id=" + id +
+                '}';
     }
 }
