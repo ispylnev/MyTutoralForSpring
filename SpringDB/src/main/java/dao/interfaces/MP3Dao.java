@@ -1,5 +1,6 @@
 package dao.interfaces;
 
+import dao.objects.Author;
 import dao.objects.MP3;
 
 import java.util.List;
@@ -9,7 +10,9 @@ public interface MP3Dao {
 //    для использования в нативных запросов  с параметрами
 //    void insertNamedJdbc(MP3 mp3);
 
-    int insertAuthorAndMP3(MP3 mp3);
+    int insertAuthor(Author author);
+
+    int insertMP3(MP3 mp3);
 
 //    для избавления от нативных запросов SQL
 //    void insertSimpleJdbc(MP3 mp3);

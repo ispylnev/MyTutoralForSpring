@@ -1,4 +1,5 @@
 package dao.implm;
+import annatations.ShowTransAlive;
 import dao.interfaces.MP3Dao;
 import dao.objects.Author;
 import dao.objects.MP3;
@@ -7,12 +8,15 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
-import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionSynchronizationManager;
+
 import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -54,23 +58,32 @@ public class SQLiteDAO implements MP3Dao {
 //
 //    }
 
+//    подключил аспектами в xml
+//    @Override
+//    @Transactional(propagation = Propagation.REQUIRED)
+    @ShowTransAlive
+    public int insertMP3(MP3 mp3){
+        MapSqlParameterSource param = new MapSqlParameterSource();
+        String sqlInsertMp3 = "insert into mp3(author_id, name) VALUES (:author_id, :name)";
+        int author_id = insertAuthor(mp3.getAuthor());
+        param.addValue("author_id",author_id);
+        param.addValue("name", mp3.getName());
+        return jdbcTemplate.update(sqlInsertMp3,param);
+    }
+
     @Override
-    public int insertAuthorAndMP3(MP3 mp3) {
+//    @Transactional(propagation = Propagation.MANDATORY)
+    public int insertAuthor(Author author) {
       String sql = "insert into author(author_name) VALUES (:name)";
-      Author author = mp3.getAuthor();
       MapSqlParameterSource param = new MapSqlParameterSource();
       param.addValue("name",author.getName());
 //      Захватим ID  записи
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(sql,param,keyHolder);
-        int author_id = keyHolder.getKey().intValue();
-
-        String sqlInsertMp3 = "insert into mp3(author_id, name) VALUES (:author_id, :name)";
-        param = new MapSqlParameterSource();
-        param.addValue("author_id",author_id);
-        param.addValue("name", mp3.getName());
-        return jdbcTemplate.update(sqlInsertMp3,param);
+        return  keyHolder.getKey().intValue();
     }
+
+
 //
 //    @Override
 //    public void insertSimpleJdbc(MP3 mp3) {
@@ -107,14 +120,15 @@ public class SQLiteDAO implements MP3Dao {
 //        SqlParameterSource [] batch = SqlParameterSourceUtils.createBatch(mp3.toArray());
 //        int[] count =  jdbcTemplate.batchUpdate(sql,batch);
 //        return count.length;
-        int i = 0;
-        for (MP3 mp3:listMp3 ){
-            insertAuthorAndMP3(mp3);
-            i++;
-        }
-        return i;
+//        int i = 0;
+//        for (MP3 mp3:listMp3 ){
+//            insertAuthorAndMP3(mp3);
+//            i++;
+//        }
+//        return i;
 
 
+        return 0;
     }
 
     @Override

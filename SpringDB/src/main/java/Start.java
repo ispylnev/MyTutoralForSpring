@@ -5,14 +5,12 @@ import dao.objects.MP3;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class Start {
 
     public static void main(String[] args) {
         Author author = new Author();
-        author.setName("Ivan");
+        author.setName("Ivadddn");
 
         MP3 mp3 = new MP3();
         mp3.setName("song");
@@ -20,7 +18,8 @@ public class Start {
 
         ApplicationContext context = new ClassPathXmlApplicationContext("context.xml");
         MP3Dao sqlLite = (SQLiteDAO) context.getBean("sqlDAO");
-        System.out.println(sqlLite.insertAuthorAndMP3(mp3));
+        sqlLite.insertMP3(mp3);
+
 
 
 //        MP3 mp3 = new MP3();
